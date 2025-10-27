@@ -1,0 +1,203 @@
+🌐 1️⃣ Form Validation (HTML + JS)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Validation</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    label { display:block; margin-top:10px; }
+    input { padding:8px; width:250px; }
+    small { color:red; }
+    button { margin-top:15px; padding:8px 12px; }
+  </style>
+</head>
+<body>
+  <h2>Form Validation</h2>
+  <form id="myForm">
+    <label>Name</label>
+    <input type="text" id="name">
+    <small id="nameErr"></small>
+
+    <label>Email</label>
+    <input type="email" id="email">
+    <small id="emailErr"></small>
+
+    <label>Password</label>
+    <input type="password" id="password">
+    <small id="passErr"></small><br>
+
+    <button type="submit">Submit</button>
+  </form>
+  <pre id="result"></pre>
+
+  <script>
+    const form = document.getElementById('myForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let name = form.name.value.trim();
+      let email = form.email.value.trim();
+      let password = form.password.value.trim();
+
+      let valid = true;
+      document.querySelectorAll('small').forEach(s => s.textContent = '');
+
+      if(name.length < 3){
+        document.getElementById('nameErr').textContent = 'Name must be at least 3 chars';
+        valid = false;
+      }
+      if(!email.match(/^\\S+@\\S+\\.\\S+$/)){
+        document.getElementById('emailErr').textContent = 'Invalid email';
+        valid = false;
+      }
+      if(password.length < 6){
+        document.getElementById('passErr').textContent = 'Password must be at least 6 chars';
+        valid = false;
+      }
+
+      if(valid){
+        result.textContent = JSON.stringify({ name, email, password }, null, 2);
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
+
+⚖️ 2️⃣ BMI Calculator
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Calculator</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    input { padding:6px; width:100px; }
+  </style>
+</head>
+<body>
+  <h2>BMI Calculator</h2>
+  <label>Height (cm): </label>
+  <input type="number" id="height" value="170"><br><br>
+  <label>Weight (kg): </label>
+  <input type="number" id="weight" value="65"><br><br>
+  <button onclick="calcBMI()">Calculate</button>
+
+  <h3 id="bmi"></h3>
+  <h4 id="category"></h4>
+
+  <script>
+    function calcBMI(){
+      const h = parseFloat(document.getElementById('height').value) / 100;
+      const w = parseFloat(document.getElementById('weight').value);
+      if(!h || !w) return;
+      const bmi = (w / (h*h)).toFixed(2);
+      document.getElementById('bmi').textContent = `Your BMI: ${bmi}`;
+      let cat = '';
+      if(bmi < 18.5) cat = 'Underweight';
+      else if(bmi < 25) cat = 'Normal';
+      else if(bmi < 30) cat = 'Overweight';
+      else cat = 'Obese';
+      document.getElementById('category').textContent = `Category: ${cat}`;
+    }
+  </script>
+</body>
+</html>
+
+📝 3️⃣ Simple CRUD Application (LocalStorage)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple CRUD</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    input { padding:8px; width:250px; }
+    button { padding:8px 10px; margin-left:5px; }
+  </style>
+</head>
+<body>
+  <h2>Simple CRUD (LocalStorage)</h2>
+  <input type="text" id="itemInput" placeholder="Enter item">
+  <button onclick="addItem()">Add</button>
+  <ul id="itemList"></ul>
+
+  <script>
+    const list = document.getElementById('itemList');
+    let items = JSON.parse(localStorage.getItem('items') || '[]');
+    render();
+
+    function addItem(){
+      const input = document.getElementById('itemInput');
+      const title = input.value.trim();
+      if(!title) return;
+      items.push({ id: Date.now(), title });
+      localStorage.setItem('items', JSON.stringify(items));
+      input.value = '';
+      render();
+    }
+
+    function deleteItem(id){
+      items = items.filter(i => i.id !== id);
+      localStorage.setItem('items', JSON.stringify(items));
+      render();
+    }
+
+    function render(){
+      list.innerHTML = '';
+      if(items.length === 0) list.innerHTML = '<li>No items added yet</li>';
+      items.forEach(i => {
+        const li = document.createElement('li');
+        li.textContent = i.title;
+        const del = document.createElement('button');
+        del.textContent = 'Delete';
+        del.onclick = () => deleteItem(i.id);
+        li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
+
+🌍 4️⃣ Fetch Data from API (JSONPlaceholder)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch API Example</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h2>Fetch API Example</h2>
+  <label>Number of posts: </label>
+  <input type="number" id="limit" value="5">
+  <button onclick="fetchPosts()">Fetch</button>
+  <ul id="posts"></ul>
+
+  <script>
+    async function fetchPosts(){
+      const limit = document.getElementById('limit').value;
+      const ul = document.getElementById('posts');
+      ul.innerHTML = '<li>Loading...</li>';
+      try {
+        const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}`);
+        const data = await res.json();
+        ul.innerHTML = '';
+        data.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${p.title}</strong><br>${p.body}`;
+          ul.appendChild(li);
+        });
+      } catch (err) {
+        ul.innerHTML = `<li style='color:red;'>Error: ${err}</li>`;
+      }
+    }
+  </script>
+</body>
+</html>
