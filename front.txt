@@ -344,6 +344,79 @@ npm install express
 node server.js
 
 
+before colour
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Before Color Page</title>
+</head>
+<body style="text-align:center; margin-top:150px;">
+  <h1>Before Colour Page 🎨</h1>
+  <p>Click below to see the colorful page!</p>
+  <a href="after.html" style="font-size:20px; text-decoration:none; color:blue;">Go to Colorful Page</a>
+</body>
+</html>
+
+
+
+after coloyr 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>After Color Page</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #00f260, #0575e6);
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      margin-top: 150px;
+    }
+    h1 {
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 250px;
+      border-radius: 10px;
+      border: none;
+      font-size: 18px;
+    }
+    button {
+      background-color: #ff0080;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌈 Colorful Page 🌈</h1>
+  <input type="text" id="userInput" placeholder="Enter something...">
+  <button onclick="showMessage()">Submit</button>
+
+  <script>
+    function showMessage() {
+      let val = document.getElementById('userInput').value;
+      if (val)
+        alert("You entered: " + val);
+      else
+        alert("Please enter something first!");
+    }
+  </script>
+</body>
+</html>
+
+
 
 
 
