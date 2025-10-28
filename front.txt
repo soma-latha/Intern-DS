@@ -426,6 +426,86 @@ after coloyr
 
 
 
+++
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Increment and Decrement</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 150px;
+    }
+    h1 {
+      color: #333;
+    }
+    #number {
+      font-size: 40px;
+      margin: 20px;
+      color: #222;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      margin: 10px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+    .inc {
+      background-color: #28a745;
+    }
+    .inc:hover {
+      background-color: #218838;
+    }
+    .dec {
+      background-color: #dc3545;
+    }
+    .dec:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔢 Increment & Decrement Counter</h1>
+  <h2 id="number">0</h2>
+  <button class="dec" onclick="decrement()">➖ Decrement</button>
+  <button class="inc" onclick="increment()">➕ Increment</button>
+
+  <script>
+    let count = 0;
+    const numberDisplay = document.getElementById("number");
+
+    function increment() {
+      count++;
+      numberDisplay.textContent = count;
+    }
+
+    function decrement() {
+      count--;
+      numberDisplay.textContent = count;
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
